@@ -41,10 +41,7 @@ export function InteractiveVoice() {
 
   const handleOptions = useCallback(
     (
-      selectedOption: string,
-      questionIndex: number,
-      correctAnswer: string,
-      visibilityLength: number
+      selectedOption: string, questionIndex: number, correctAnswer: string, visibilityLength: number
     ) => {
       if (selectedOption === correctAnswer) {
         console.log(questionIndex, visibilityLength, "showme");
@@ -54,7 +51,7 @@ export function InteractiveVoice() {
         if (questionIndex !== visibilityLength) {
           setTimeout(() => {
             setCurrentPage(currentPage + 1);
-          }, 2000);
+          }, 1000);
         }
       }
       setSelectedOption((prev) => {
