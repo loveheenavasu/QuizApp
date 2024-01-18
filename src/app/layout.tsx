@@ -16,8 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} style={{ backgroundImage: "url('/assets/image/589.jpg')",
-        backgroundSize: "cover"}}>{children}</body>
+      <body className={inter.className} style={{ backgroundImage: "url('/assets/image/589.jpg')", height: "100%"}}>{children}</body>
     </html>
   )
 }

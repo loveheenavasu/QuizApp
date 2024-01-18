@@ -10,3 +10,11 @@ export interface IQuestion {
     incorrectAnswers: [];
     question: question;
 }
+export interface IQuizCardData{
+    quizData: [];
+    handleOptions: () => void;
+    selectedOption: string | null;
+    handleClick: () => void;
+    answerVisibility: boolean[];
+
+}
