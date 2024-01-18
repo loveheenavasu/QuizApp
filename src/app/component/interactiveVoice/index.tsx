@@ -68,6 +68,15 @@ export function InteractiveVoice() {
     indexOfLastQuestion
   );
 
+  let collectedOptions: string[] = [];
+  currentQuestions.map((info: IQuestion) => {
+    collectedOptions.push(info?.correctAnswer);
+    info.incorrectAnswers.map((option) => {
+      collectedOptions.push(option);
+    });
+    collectedOptions.sort();
+  });
+
   return (
     <Grid2>
       <Box mb={3} display="flex" justifyContent="center" alignItems={"center"}>
@@ -101,7 +110,7 @@ export function InteractiveVoice() {
                       {info?.question?.text}
                     </Typography>
                   </Box>
-                  <Typography
+                  {/* <Typography
                     onClick={() =>
                       handleOptions(info?.correctAnswer, indexOfLastQuestion)
                     }
@@ -120,9 +129,9 @@ export function InteractiveVoice() {
                     }}
                   >
                     {info?.correctAnswer}
-                  </Typography>
-                  <Box mb={1}>
-                    {info?.incorrectAnswers.map((options, index) => (
+                  </Typography> */}
+                  <Box mb={1} mt={2}>
+                    {collectedOptions.map((options, index) => (
                       <Typography
                         key={index}
                         onClick={() =>
