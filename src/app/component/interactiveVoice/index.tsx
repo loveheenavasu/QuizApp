@@ -110,26 +110,6 @@ export function InteractiveVoice() {
                       {info?.question?.text}
                     </Typography>
                   </Box>
-                  {/* <Typography
-                    onClick={() =>
-                      handleOptions(info?.correctAnswer, indexOfLastQuestion)
-                    }
-                    sx={{
-                      cursor: "pointer",
-                      border: "1px solid #DEE5EF",
-                      ml: 2,
-                      mt: 2,
-                      p: 1,
-                      borderRadius: ".7rem",
-                      backgroundColor:
-                        selectedOption[indexOfLastQuestion] ===
-                        info.correctAnswer
-                          ? "green"
-                          : "",
-                    }}
-                  >
-                    {info?.correctAnswer}
-                  </Typography> */}
                   <Box mb={1} mt={2}>
                     {collectedOptions.map((options, index) => (
                       <Typography
@@ -147,7 +127,7 @@ export function InteractiveVoice() {
                           backgroundColor:
                             selectedOption[indexOfLastQuestion] === options
                               ? options === info.correctAnswer
-                                ? "#2ecc71"
+                                ? "#058a05"
                                 : "#e74c3c"
                               : "",
                         }}
