@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { InteractiveVoice } from "./component/InteractiveVoice/index";
+import { InteractiveVoice } from "./component/interactiveVoice/index";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 export default function Home() {
