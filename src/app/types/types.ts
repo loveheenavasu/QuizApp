@@ -11,10 +11,14 @@ export interface IQuestion {
     question: question;
 }
 export interface IQuizCardData{
-    quizData: [];
-    handleOptions: () => void;
-    selectedOption: string | null;
-    handleClick: () => void;
+    currentQuestions: IQuestion[];
+    handleOptions: (options: string, indexOfLastQuestion: number, correctAnswer: string, visibilityLength: number) => void;
+    selectedOption: string[];
+    handleClick: (questionIndex: number) => void;
     answerVisibility: boolean[];
-
+    collectedOptions: string[];
+    indexOfLastQuestion: number;
+    handlePagination: (currentPage: number, count: number) => void;
+    currentPage: number;
+    
 }

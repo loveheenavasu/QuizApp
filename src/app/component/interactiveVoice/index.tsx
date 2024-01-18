@@ -2,18 +2,14 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { IQuestion } from "../../types/types";
-import CircleIcon from "@mui/icons-material/Circle";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import party from "party-js";
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
   CircularProgress,
   Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import QuestionCard from "../questionCard";
 
 export function InteractiveVoice() {
   const [quizData, setQuizData] = useState<IQuestion[]>([]);
@@ -44,14 +40,30 @@ export function InteractiveVoice() {
   }, []);
 
   const handleOptions = useCallback(
-    (selectedOption: string, questionIndex: number) => {
+    (
+      selectedOption: string,
+      questionIndex: number,
+      correctAnswer: string,
+      visibilityLength: number
+    ) => {
+      if (selectedOption === correctAnswer) {
+        console.log(questionIndex, visibilityLength, "showme");
+        party.confetti(document.body, {
+          count: party.variation.range(50, 10000),
+        });
+        if (questionIndex !== visibilityLength) {
+          setTimeout(() => {
+            setCurrentPage(currentPage + 1);
+          }, 2000);
+        }
+      }
       setSelectedOption((prev) => {
         let newVisibility = [...prev];
         newVisibility[questionIndex] = selectedOption;
         return newVisibility;
       });
     },
-    []
+    [currentPage]
   );
   const handlePagination = useCallback(
     (currentPage: number, count: number) => {
@@ -90,112 +102,17 @@ export function InteractiveVoice() {
             <CircularProgress />
           </Box>
         ) : (
-          <Box color="white" sx={{ m: 5 }}>
-            {currentQuestions?.map((info: IQuestion, questionIndex: number) => (
-              <Card
-                key={questionIndex}
-                sx={{
-                  width: "470px",
-                  borderRadius: ".7rem",
-                  transition: "transform 0.3s ease-in-out",
-                  "&:hover": {
-                    transform: "scale(1.06)",
-                  },
-                }}
-              >
-                <CardContent>
-                  <Box display="flex" alignItems="center">
-                    <CircleIcon sx={{ fontSize: "10px" }} />
-                    <Typography ml={2} sx={{ fontSize: "18px" }}>
-                      {info?.question?.text}
-                    </Typography>
-                  </Box>
-                  <Box mb={1} mt={2}>
-                    {collectedOptions.map((options, index) => (
-                      <Typography
-                        key={index}
-                        onClick={() =>
-                          handleOptions(options, indexOfLastQuestion)
-                        }
-                        sx={{
-                          cursor: "pointer",
-                          ml: 2,
-                          mt: 1,
-                          p: 1,
-                          borderRadius: ".7rem",
-                          border: "1px solid #DEE5EF",
-                          backgroundColor:
-                            selectedOption[indexOfLastQuestion] === options
-                              ? options === info.correctAnswer
-                                ? "#058a05"
-                                : "#e74c3c"
-                              : "",
-                        }}
-                      >
-                        {options}
-                      </Typography>
-                    ))}
-                  </Box>
-                  <Box ml={2} mt={2}>
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      flexWrap="wrap"
-                    >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        onClick={() => handleClick(questionIndex)}
-                      >
-                        {answerVisibility[questionIndex]
-                          ? "Hide Answer"
-                          : "View Answer"}
-                      </Button>
-                      <Box display="flex" gap="10px">
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          onClick={() => {
-                            handlePagination(currentPage, -1);
-                          }}
-                          disabled={currentPage === 1}
-                        >
-                          <ArrowBackIcon />
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          onClick={() => {
-                            handlePagination(currentPage, 1);
-                          }}
-                          disabled={currentPage === answerVisibility.length}
-                        >
-                          <ArrowForwardIcon />
-                        </Button>
-                      </Box>
-                    </Box>
-
-                    {answerVisibility[questionIndex] && (
-                      <Typography
-                        mt={2}
-                        sx={{
-                          color: "green",
-                          border: "1px solid green",
-                          borderRadius: ".7rem",
-                          p: 1,
-                        }}
-                      >
-                        {info?.correctAnswer}
-                      </Typography>
-                    )}
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
+          <QuestionCard
+            currentQuestions={currentQuestions}
+            handleOptions={handleOptions}
+            selectedOption={selectedOption}
+            handleClick={handleClick}
+            answerVisibility={answerVisibility}
+            collectedOptions={collectedOptions}
+            indexOfLastQuestion={indexOfLastQuestion}
+            handlePagination={handlePagination}
+            currentPage={currentPage}
+          />
         )}
       </Box>
     </Grid2>
