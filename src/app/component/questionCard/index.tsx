@@ -21,8 +21,9 @@ const QuestionCard: React.FC<IQuizCardData> = ({
       {currentQuestions?.map((info: IQuestion, questionIndex: number) => (
         <Card
           key={questionIndex}
+          className="questionCard"
           sx={{
-            width: "470px",
+            width: "27rem",
             borderRadius: ".7rem",
             transition: "transform 0.3s ease-in-out",
             "&:hover": {
@@ -33,7 +34,7 @@ const QuestionCard: React.FC<IQuizCardData> = ({
           <CardContent>
             <Box display="flex" alignItems="center">
               <CircleIcon sx={{ fontSize: "10px" }} />
-              <Typography ml={2} sx={{ fontSize: "18px" }}>
+              <Typography ml={2} sx={{ fontSize: "18px" }} className="questionText">
                 {info?.question?.text}
               </Typography>
             </Box>
@@ -41,6 +42,7 @@ const QuestionCard: React.FC<IQuizCardData> = ({
               {collectedOptions.map((options, index) => (
                 <Typography
                   key={index}
+                  className="questionOptions"
                   onClick={() => handleOptions(options, indexOfLastQuestion, info.correctAnswer, answerVisibility.length)}
                   sx={{
                     cursor: "pointer",
@@ -71,13 +73,14 @@ const QuestionCard: React.FC<IQuizCardData> = ({
                   variant="contained"
                   color="primary"
                   size="small"
+                  className="button"
                   onClick={() => handleClick(questionIndex)}
                 >
                   {answerVisibility[questionIndex]
                     ? "Hide Answer"
                     : "View Answer"}
                 </Button>
-                <Box display="flex" gap="10px">
+                <Box display="flex" gap="10px" className="paginateButtons">
                   <Button
                     variant="outlined"
                     color="primary"
@@ -87,7 +90,7 @@ const QuestionCard: React.FC<IQuizCardData> = ({
                     }}
                     disabled={currentPage === 1}
                   >
-                    <ArrowBackIcon />
+                    <ArrowBackIcon className="icons"/>
                   </Button>
                   <Button
                     variant="outlined"
@@ -98,7 +101,7 @@ const QuestionCard: React.FC<IQuizCardData> = ({
                     }}
                     disabled={currentPage === answerVisibility.length}
                   >
-                    <ArrowForwardIcon />
+                    <ArrowForwardIcon className="icons"/>
                   </Button>
                 </Box>
               </Box>
@@ -106,6 +109,7 @@ const QuestionCard: React.FC<IQuizCardData> = ({
               {answerVisibility[questionIndex] && (
                 <Typography
                   mt={2}
+                  className="viewAnswer"
                   sx={{
                     color: "green",
                     border: "1px solid green",

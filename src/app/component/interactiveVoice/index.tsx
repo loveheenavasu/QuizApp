@@ -3,11 +3,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { IQuestion } from "../../types/types";
 import party from "party-js";
-import {
-  Box,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import QuestionCard from "../questionCard";
 
@@ -39,9 +35,11 @@ export function InteractiveVoice() {
     });
   }, []);
 
-  const handleOptions = useCallback(
-    (
-      selectedOption: string, questionIndex: number, correctAnswer: string, visibilityLength: number
+  const handleOptions = useCallback((
+      selectedOption: string,
+      questionIndex: number,
+      correctAnswer: string,
+      visibilityLength: number
     ) => {
       if (selectedOption === correctAnswer) {
         console.log(questionIndex, visibilityLength, "showme");
@@ -51,8 +49,10 @@ export function InteractiveVoice() {
         if (questionIndex !== visibilityLength) {
           setTimeout(() => {
             setCurrentPage(currentPage + 1);
+            setAnswerVisibility(Array(answerVisibility.length).fill(false));
           }, 1000);
         }
+        
       }
       setSelectedOption((prev) => {
         let newVisibility = [...prev];
@@ -60,7 +60,7 @@ export function InteractiveVoice() {
         return newVisibility;
       });
     },
-    [currentPage]
+    [answerVisibility.length, currentPage]
   );
   const handlePagination = useCallback(
     (currentPage: number, count: number) => {
@@ -88,8 +88,8 @@ export function InteractiveVoice() {
 
   return (
     <Grid2>
-      <Box mb={3} display="flex" justifyContent="center" alignItems={"center"}>
-        <Typography variant="h4" color="white" p="10px 0px">
+      <Box mb={3} display="flex" justifyContent="center" alignItems={"center"} className="headingContainer">
+        <Typography variant="h4" color="white" p="10px 0px" className="heading">
           Interactive Quiz App
         </Typography>
       </Box>
