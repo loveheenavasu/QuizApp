@@ -8,7 +8,7 @@
     width: 20rem;
   }
 }
-@media screen and (max-width: 425px){
+@media screen and (max-width: 599px){
   .heading{
     font-size: 22px;
   }
